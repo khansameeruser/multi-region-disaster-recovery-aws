@@ -1,0 +1,15 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: RDS MySQL Setup
+
+Resources:
+  MySQLDatabase:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceClass: db.t3.micro
+      Engine: mysql
+      MasterUsername: admin
+      MasterUserPassword: "{{resolve:ssm:/database/password}}"
+      AllocatedStorage: 20
+      MultiAZ: true
+      PubliclyAccessible: false
+      DBSubnetGroupName: !Ref PrivateSubnet
